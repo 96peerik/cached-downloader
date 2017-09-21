@@ -1,0 +1,15 @@
+{
+  "name": "cached-downloader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "cached-downloader.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "author": "Peter Eriksson",
+  "license": "MIT",
+  "dependencies": {
+    "follow-redirects": "^1.2.4",
+    "mkdirp-then": "^1.2.0"
+  }
+}

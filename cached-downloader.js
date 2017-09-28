@@ -17,7 +17,7 @@ class CachedDownloader extends EventEmitter {
     this.progress = new Map();
     this.cache = new Cache({ path: this.localDirectory });
     this.cache.on('remove', (item) => {
-      fs.unlink(item.filename, (err) => console.error(err)); 
+      fs.unlink(item.filename, (err) => {}); 
     });
   }
 

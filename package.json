@@ -10,6 +10,9 @@
   "license": "MIT",
   "dependencies": {
     "follow-redirects": "^1.2.4",
-    "mkdirp-then": "^1.2.0"
+    "level": "^1.7.0",
+    "mime": "^2.0.3",
+    "mkdirp-then": "^1.2.0",
+    "uuid": "^3.1.0"
   }
 }

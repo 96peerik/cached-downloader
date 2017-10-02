@@ -1,23 +1,21 @@
 const EventEmitter = require('events').EventEmitter;
 const Downloader = require('./lib/downloader');
 const Cache = require('./lib/referenced-file-cache');
-const os = require('os');
 const fs = require('fs');
 const path = require('path');
-const uuid = require('uuid');
 const crypto = require('crypto');
 
 class CachedDownloader extends EventEmitter {
   constructor(options) {
     super();
     if ((options == null) || (options.localDirectory == null)) {
-      throw(new Error('CachedDownloader: localDirectory property missing in options object to constructor'));
+      throw (new Error('CachedDownloader: localDirectory property missing in options object to constructor'));
     }
     this.localDirectory = options.localDirectory;
     this.progress = new Map();
-    this.cache = new Cache({ path: this.localDirectory });
+    this.cache = new Cache({ path: this.localDirectory, ttl: options.ttl, sweep: options.sweep });
     this.cache.on('remove', (item) => {
-      fs.unlink(item.filename, (err) => {}); 
+      fs.unlink(item.filename, () => this.emit('remove', item));
     });
   }
 
@@ -26,7 +24,7 @@ class CachedDownloader extends EventEmitter {
   }
 
   static hashString(str) {
-    return crypto.createHash('md5').update(str).digest('hex');    
+    return crypto.createHash('md5').update(str).digest('hex');
   }
 
   download(url, localFile, ref) {
@@ -37,21 +35,24 @@ class CachedDownloader extends EventEmitter {
       this.progress.delete(url);
       return item.filename;
     })
-    .catch((err) => {
-      return Downloader.download(url, path.join(this.localDirectory, filename), true, (bytes, total) => {
-       console.log(bytes, total); 
-      })
-      .then((item) => this.cache.set(url, item.filename, ref))
+    .catch(() =>
+      Downloader.download(url,
+        path.join(this.localDirectory, filename),
+        true,
+        (progress) => {
+          this.emit('progress', progress);
+        }
+      )
+      .then(item => this.cache.set(url, item.filename, ref))
       .then((item) => {
         this.progress.delete(url);
-        return item.filename
+        return item.filename;
       })
       .catch((err) => {
         this.progress.delete(url);
         throw err;
-      })
-    });
-      
+      }));
+
     this.progress.set(url, promise);
     return promise;
   }

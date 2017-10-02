@@ -1,5 +1,5 @@
 # CachedDownloader
-Module that downloads over http/https and keeps the file in local cache. Items in cache can be assigned references and will not be deleted as long as the reference is active. If an item is dereferenced, TTL property will decide when the file is deleted.
+Module that downloads over http/https and keeps the file in local cache. Items in cache can be assigned references and will not be deleted as long as the reference is active. If an item is dereferenced, TTL property will decide when the file is deleted. Cache is persisted in leveldb.
 
 
 ### Install

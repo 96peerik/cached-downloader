@@ -13,7 +13,7 @@ const Downloader = require('./cached-downloader');
 
 const downloader = new Downloader({ localDirectory: '/var/tmp/downloader', ttl: 5000, sweep: 2000 });
 downloader.on('error', err => console.error(err));
-downloader.on('remove', item => console.error('item was removed from cache:', item));
+downloader.on('remove', item => console.log('item was removed from cache:', item));
 downloader.on('progress', progress => console.log(progress));
 
 const url = 'https://www.thomann.de/pics/bdb/147236/10085220_800.jpg';

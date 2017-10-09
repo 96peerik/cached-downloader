@@ -27,6 +27,12 @@ class CachedDownloader extends EventEmitter {
     return crypto.createHash('md5').update(str).digest('hex');
   }
 
+  getItemStatus(url, ref) {
+    if (this.progress.has(url)) return Promise.reject(new Error('Not yet downloaded'));
+    return this.cache.get(url, ref)
+      .then(item => ({ filename: item.filename, fromCache: true }));
+  }
+
   download(url, localFile, ref) {
     const filename = localFile || CachedDownloader.hashString(url);
     // download of this url already in progress - return original promise

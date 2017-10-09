@@ -10,11 +10,15 @@ downloader.init()
   .then(() => {
     // Download image and assign "bongos" as reference
     downloader.download(url, null, 'bongos')
-    .then((filename) => {
-      console.log('available @', filename);
+    .then((item) => {
+      console.log('available @', item.filename);
 
       // clear the "bongos" reference, item will be discarded according to TTL
       downloader.clearRef('bongos');
+    });
+    downloader.download(url, null, 'bongos')
+    .then((item) => {
+      console.log('available @', item.filename);
     });
   });
 

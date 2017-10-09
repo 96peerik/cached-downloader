@@ -31,9 +31,10 @@ class CachedDownloader extends EventEmitter {
     const filename = localFile || CachedDownloader.hashString(url);
     // download of this url already in progress - return original promise
     if (this.progress.has(url)) return this.progress.get(url);
+
     const promise = this.cache.get(url, ref).then((item) => {
       this.progress.delete(url);
-      return item.filename;
+      return { filename: item.filename, fromCache: true };
     })
     .catch(() =>
       Downloader.download(url,
@@ -46,7 +47,7 @@ class CachedDownloader extends EventEmitter {
       .then(item => this.cache.set(url, item.filename, ref))
       .then((item) => {
         this.progress.delete(url);
-        return item.filename;
+        return { filename: item.filename, fromCache: false };
       })
       .catch((err) => {
         this.progress.delete(url);

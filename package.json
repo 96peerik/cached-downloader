@@ -1,7 +1,7 @@
 {
   "name": "cached-downloader",
   "version": "1.0.0",
-  "description": "",
+  "description": "http/https download client with ttl/reference based caching",
   "main": "cached-downloader.js",
   "scripts": {
     "test": "mocha test"
@@ -16,10 +16,14 @@
     "uuid": "^3.1.0"
   },
   "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
-    "eslint-plugin-react": "^7.4.0"
+    "eslint-plugin-react": "^7.4.0",
+    "mocha": "^4.0.0",
+    "mock-require": "^2.0.2"
   }
 }

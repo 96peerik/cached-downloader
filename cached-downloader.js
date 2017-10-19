@@ -28,9 +28,8 @@ class CachedDownloader extends EventEmitter {
   }
 
   getItemStatus(url, ref) {
-    if (this.progress.has(url)) return Promise.reject(new Error('Not yet downloaded'));
-    return this.cache.get(url, ref)
-      .then(item => ({ filename: item.filename, fromCache: true }));
+    if (this.progress.has(url)) return null;
+    return this.cache.getSync(url, ref);
   }
 
   download(url, localFile, ref) {

@@ -23,6 +23,10 @@ class CachedDownloader extends EventEmitter {
     return this.cache.init();
   }
 
+  destroy() {
+    this.cache.destroy();
+  }
+
   static hashString(str) {
     return crypto.createHash('md5').update(str).digest('hex');
   }

@@ -41,7 +41,8 @@ class CachedDownloader extends EventEmitter {
     // download of this url already in progress - return original promise
     if (this.progress.has(url)) return this.progress.get(url);
 
-    const promise = this.cache.get(url, ref).then((item) => {
+    const promise = this.cache.get(url, ref)
+    .then((item) => {
       this.progress.delete(url);
       return { filename: item.filename, fromCache: true };
     })

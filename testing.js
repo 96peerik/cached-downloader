@@ -15,10 +15,14 @@ downloader.init()
 
       // clear the "bongos" reference, item will be discarded according to TTL
       downloader.clearRef('bongos');
-    });
+    })
+    .catch(e => console.error(e));
+
+
     downloader.download(url, null, 'bongos')
     .then((item) => {
       console.log('available @', item.filename);
-    });
+    })
+    .catch(e => console.error(e));
   });
 

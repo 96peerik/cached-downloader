@@ -1,6 +1,6 @@
 {
   "name": "cached-downloader",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "http/https download client with ttl/reference based caching",
   "main": "cached-downloader.js",
   "scripts": {

@@ -13,7 +13,13 @@ class CachedDownloader extends EventEmitter {
     }
     this.localDirectory = options.localDirectory;
     this.progress = new Map();
-    this.cache = new Cache({ path: this.localDirectory, ttl: options.ttl, sweep: options.sweep });
+    this.progressThrottle = options.progressThrottle || 1000;
+    this.cache = new Cache({
+      path: this.localDirectory,
+      ttl: options.ttl,
+      sweep: options.sweep
+    });
+
     this.cache.on('remove', (item) => {
       fs.unlink(item.filename, () => this.emit('remove', item));
     });
@@ -52,7 +58,8 @@ class CachedDownloader extends EventEmitter {
         true,
         (progress) => {
           this.emit('progress', progress);
-        }
+        },
+        this.progressThrottle
       )
       .then(item => this.cache.set(url, item.filename, ref))
       .then((item) => {

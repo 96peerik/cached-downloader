@@ -47,6 +47,12 @@ class CachedDownloader extends EventEmitter {
     // download of this url already in progress - return original promise
     if (this.progress.has(url)) return this.progress.get(url);
 
+    // See if item is already in the TTL map
+    const itemFromCache = this.cache.getSync(url, ref);
+    if (itemFromCache) {
+      return Promise.resolve({ filename: itemFromCache.data.filename, fromCache: true });
+    }
+
     const promise = this.cache.get(url, ref)
     .then((item) => {
       this.progress.delete(url);

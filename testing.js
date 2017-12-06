@@ -11,7 +11,7 @@ downloader.init()
     // Download image and assign "bongos" as reference
     downloader.download(url, null, 'bongos')
     .then((item) => {
-      console.log('available @', item.filename);
+      console.log('available @', item);
 
       // clear the "bongos" reference, item will be discarded according to TTL
       downloader.clearRef('bongos');
@@ -21,7 +21,7 @@ downloader.init()
 
     downloader.download(url, null, 'bongos')
     .then((item) => {
-      console.log('available @', item.filename);
+      console.log('available @', item);
     })
     .catch(e => console.error(e));
   });

@@ -44,6 +44,7 @@ class CachedDownloader extends EventEmitter {
 
   download(url, localFile, ref) {
     const filename = localFile || CachedDownloader.hashString(url);
+    const addExtension = (localFile == null);
     // download of this url already in progress - return original promise
     if (this.progress.has(url)) return this.progress.get(url);
 
@@ -61,7 +62,7 @@ class CachedDownloader extends EventEmitter {
     .catch(() =>
       Downloader.download(url,
         path.join(this.localDirectory, filename),
-        true,
+        addExtension,
         (progress) => {
           this.emit('progress', progress);
         },

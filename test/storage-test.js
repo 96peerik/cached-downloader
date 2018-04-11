@@ -7,14 +7,12 @@ const expect = chai.expect;
 const describe = global.describe;
 const it = global.it;
 
+const mock = require('mock-require');
 
+mock.stop('../lib/storage.js');
 const Storage = require('../lib/storage.js');
 
 const path = require('path');
-
-function wait(ms) {
-  return new Promise(resolve => setTimeout(() => resolve(), ms));
-}
 
 let storageA = null;
 let storageB = null;

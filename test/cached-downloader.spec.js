@@ -3,9 +3,9 @@ const chaiAsPromised = require('chai-as-promised');
 
 chai.use(chaiAsPromised);
 
-const expect = chai.expect;
-const describe = global.describe;
-const it = global.it;
+global.expect = chai.expect;
+global.describe = global.describe;
+global.it = global.it;
 
 const mock = require('mock-require');
 
@@ -39,12 +39,4 @@ class StorageMock {
 }
 
 mock('../lib/storage.js', StorageMock);
-
-const CachedDownloader = require('../cached-downloader.js');
-const path = require('path');
-
-const downloader = new CachedDownloader({ localPath: path.join(__dirname, 'tmp'), ttl: 1000 });
-
-describe('CachedDownloader', () => {
-});
 

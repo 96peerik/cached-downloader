@@ -16,7 +16,10 @@ downloader.init()
       // clear the "bongos" reference, item will be discarded according to TTL
       downloader.clearRef('bongos');
     })
-    .catch(e => console.error(e));
+    .catch((e) => {
+      console.log([...downloader.cache.ttlMap.entries()]);
+      console.error(e);
+    });
 
 
     downloader.download(url, null, 'bongos')
@@ -24,5 +27,13 @@ downloader.init()
       console.log('available @', item);
     })
     .catch(e => console.error(e));
+
+    setTimeout(() => {
+      downloader.download(url, null, 'bongos')
+      .then((item) => {
+        console.log('available @', item);
+      })
+      .catch(e => console.error(e));
+    }, 2000);
   });
 
